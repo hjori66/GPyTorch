@@ -36,15 +36,15 @@ def main():
     # this is for running the notebook in our testing framework
     smoke_test = ('CI' in os.environ)
 
-    if not smoke_test and not os.path.isfile('../elevators.mat'):
+    if not smoke_test and not os.path.isfile('data/elevators.mat'):
         print('Downloading \'elevators\' UCI dataset...')
         urllib.request.urlretrieve('https://drive.google.com/uc?export=download&id=1jhWL3YUHvXIaftia4qeAyDwVxo6j1alk',
-                                   '../elevators.mat')
+                                   'data/elevators.mat')
 
     if smoke_test:  # this is for running the notebook in our testing framework
         X, y = torch.randn(1000, 3), torch.randn(1000)
     else:
-        data = torch.Tensor(loadmat('../elevators.mat')['data'])
+        data = torch.Tensor(loadmat('data/elevators.mat')['data'])
         X = data[:, :-1]
         X = X - X.min(0)[0]
         X = 2 * (X / X.max(0)[0]) - 1
