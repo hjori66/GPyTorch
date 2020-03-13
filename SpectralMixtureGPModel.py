@@ -8,6 +8,8 @@ GPyTorch Tutorial :: SpectralMixtureGPModel
 https://gpytorch.readthedocs.io/en/latest/examples/01_Exact_GPs/Spectral_Mixture_GP_Regression.html
 """
 
+torch.cuda.manual_seed(1)
+torch.manual_seed(1)
 
 class SpectralMixtureGPModel(gpytorch.models.ExactGP):
     def __init__(self, train_x, train_y, likelihood):
@@ -16,7 +18,7 @@ class SpectralMixtureGPModel(gpytorch.models.ExactGP):
         self.covar_module = gpytorch.kernels.SpectralMixtureKernel(num_mixtures=4)
         self.covar_module.initialize_from_data(train_x, train_y)
 
-    def forward(self,x):
+    def forward(self, x):
         mean_x = self.mean_module(x)
         covar_x = self.covar_module(x)
         return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
@@ -75,7 +77,7 @@ def main():
         ax.set_ylim([-3, 3])
         ax.legend(['Observed Data', 'Mean', 'Confidence'])
 
-        plt.savefig("results/SpectralMixtureGPModel")
+        plt.savefig("results/SpectralMixtureGPModel2.png")
 
 
 if __name__ == '__main__':
